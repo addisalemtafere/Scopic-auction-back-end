@@ -1,0 +1,12 @@
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\bin\Debug\netcoreapp5.0\Common.deps.json
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\bin\Debug\netcoreapp5.0\Common.dll
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\bin\Debug\netcoreapp5.0\ref\Common.dll
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\bin\Debug\netcoreapp5.0\Common.pdb
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.csprojAssemblyReference.cache
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.AssemblyInfoInputs.cache
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.AssemblyInfo.cs
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.csproj.CoreCompileInputs.cache
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.dll
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\ref\Common.dll
+D:\JOB\Scopic\Last-auction\AuctionSystem\src\Core\Common\obj\Debug\netcoreapp5.0\Common.pdb

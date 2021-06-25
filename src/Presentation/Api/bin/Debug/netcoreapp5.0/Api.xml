@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Api</name>
+    </assembly>
+    <members>
+        <member name="M:Api.Controllers.AdminController.Get(Api.Models.PaginationQuery,Api.Models.UsersFilter)">
+            <summary>
+            Lists all users with roles
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.AdminController.Post(Application.Admin.Commands.CreateAdmin.CreateAdminCommand)">
+            <summary>
+            Creates a new administrator
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.AdminController.Delete(Application.Admin.Commands.DeleteAdmin.DeleteAdminCommand)">
+            <summary>
+            Deletes administrator
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.IdentityController.Register(Application.Users.Commands.CreateUser.CreateUserCommand)">
+            <summary>
+            Creates a new user
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.IdentityController.Confirm(Application.Users.Commands.ConfirmEmail.ConfirmEmailCommand)">
+            <summary>
+            Verifies user email
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.IdentityController.Login(Application.Users.Commands.LoginUser.LoginUserCommand)">
+            <summary>
+            Verifies user credentials and generates JWT and Refresh token
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.IdentityController.Refresh(Application.Users.Commands.Jwt.Refresh.JwtRefreshTokenCommand)">
+            <summary>
+            Verifies the provided token and generates new token and refresh token
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.IdentityController.Logout">
+            <summary>
+            Invalidates jwt tokens and removes cookies - logout user
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.ItemsController.Get(Api.Models.PaginationQuery,Api.Models.ItemsFilter)">
+            <summary>
+            Retrieves all items (max 24 per request)
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.ItemsController.Get(System.Guid)">
+            <summary>
+            Retrieves item with given id
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.ItemsController.Post(Application.Items.Commands.CreateItem.CreateItemCommand)">
+            <summary>
+            Creates item
+            </summary>
+        </member>
+        <member name="M:Api.Controllers.ItemsController.Put(System.Guid,Application.Items.Commands.UpdateItem.UpdateItemCommand)">
+            <summary>
+            Updates item
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Api.Controllers.ItemsController.Delete(System.Guid)">
+            <summary>
+            Deletes item
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Api.Controllers.PicturesController.Get(System.Guid)">
+            <summary>
+            Get details for given picture
+            </summary>
+            <returns>Returns the corresponding picture</returns>
+        </member>
+        <member name="M:Api.Controllers.PicturesController.Post(Application.Pictures.Commands.CreatePicture.CreatePictureCommand)">
+            <summary>
+            Uploads pictures
+            </summary>
+            <returns>Collection of the corresponding pictures with their Id's and urls</returns>
+        </member>
+        <member name="M:Api.Controllers.PicturesController.Delete(System.Guid,Application.Pictures.Commands.DeletePicture.DeletePictureCommand)">
+            <summary>
+            Deletes picture
+            </summary>
+        </member>
+    </members>
+</doc>
