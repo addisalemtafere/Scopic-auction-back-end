@@ -7,14 +7,14 @@
     {
         public PagedResponse()
         {
-            this.PageNumber = 1;
-            this.PageSize = AppConstants.PageSize;
+            PageNumber = 1;
+            PageSize = AppConstants.PageSize;
         }
 
         public PagedResponse(IEnumerable<T> data, int totalDataCountInDatabase)
         {
-            this.Data = data;
-            this.TotalPages = (int) Math.Ceiling(totalDataCountInDatabase / (double) AppConstants.PageSize);
+            Data = data;
+            TotalPages = (int) Math.Ceiling(totalDataCountInDatabase / (double) AppConstants.PageSize);
         }
 
         public int TotalPages { get; set; }

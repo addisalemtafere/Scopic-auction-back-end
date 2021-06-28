@@ -20,17 +20,17 @@ namespace Api.Middlewares
             context.Request.Cookies.TryGetValue(ApiConstants.JwtToken, out var jwtToken);
 
             if (jwtToken != null && refreshToken != null)
-            {
                 context.Request.Headers.Append(AuthorizationHeader, $"Bearer {jwtToken}");
-            }
 
-            await this.next(context);
+            await next(context);
         }
     }
 
     public static class AuthorizationHeaderMiddlewareExtensions
     {
         public static IApplicationBuilder UseAuthorizationHeader(this IApplicationBuilder builder)
-            => builder.UseMiddleware<AuthorizationHeaderMiddleware>();
+        {
+            return builder.UseMiddleware<AuthorizationHeaderMiddleware>();
+        }
     }
 }

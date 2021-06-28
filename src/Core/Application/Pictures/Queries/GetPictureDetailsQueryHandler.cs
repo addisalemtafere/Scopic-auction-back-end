@@ -27,16 +27,13 @@
         public async Task<Response<PictureDetailsResponseModel>> Handle(GetPictureDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            var picture = await this.context
+            var picture = await context
                 .Pictures
                 .Where(p => p.Id == request.Id)
-                .ProjectTo<PictureDetailsResponseModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<PictureDetailsResponseModel>(mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if (picture == null)
-            {
-                throw new NotFoundException(nameof(Picture));
-            }
+            if (picture == null) throw new NotFoundException(nameof(Picture));
 
             return new Response<PictureDetailsResponseModel>(picture);
         }

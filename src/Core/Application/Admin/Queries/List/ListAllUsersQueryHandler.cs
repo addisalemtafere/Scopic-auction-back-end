@@ -30,17 +30,17 @@
             CancellationToken cancellationToken)
         {
             var skipCount = (request.PageNumber - 1) * request.PageSize;
-            var queryable = this.context.Users.AsQueryable();
-            var totalUsersCount = await this.context.Users.CountAsync(cancellationToken);
+            var queryable = context.Users.AsQueryable();
+            var totalUsersCount = await context.Users.CountAsync(cancellationToken);
 
-            var adminIds = await this.userManager.GetUsersInRoleAsync(AppConstants.AdministratorRole);
+            var adminIds = await userManager.GetUsersInRoleAsync(AppConstants.AdministratorRole);
 
             if (request?.Filters == null)
             {
                 var pagedUsers = PaginationHelper.CreatePaginatedResponse(request, await queryable
                     .Skip(skipCount)
                     .Take(request.PageSize)
-                    .ProjectTo<ListAllUsersResponseModel>(this.mapper.ConfigurationProvider)
+                    .ProjectTo<ListAllUsersResponseModel>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken), totalUsersCount);
 
                 AddUserRoles(pagedUsers.Data, adminIds);
@@ -52,7 +52,7 @@
             var users = await queryable
                 .Skip(skipCount)
                 .Take(request.PageSize)
-                .ProjectTo<ListAllUsersResponseModel>(this.mapper.ConfigurationProvider)
+                .ProjectTo<ListAllUsersResponseModel>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
             var result = PaginationHelper.CreatePaginatedResponse(request, users, totalUsersCount);
             AddUserRoles(users, adminIds);
@@ -68,13 +68,9 @@
                 var nonCurrentRoles = new List<string>();
 
                 if (adminIds.Contains(user.Id))
-                {
                     currentUserRoles.Add(AppConstants.AdministratorRole);
-                }
                 else
-                {
                     nonCurrentRoles.Add(AppConstants.AdministratorRole);
-                }
 
                 user.CurrentRoles = currentUserRoles;
                 user.NonCurrentRoles = nonCurrentRoles;
@@ -84,10 +80,7 @@
         private static IQueryable<AuctionUser> AddFiltersOnQuery(ListAllUsersQueryFilter filters,
             IQueryable<AuctionUser> queryable)
         {
-            if (!string.IsNullOrEmpty(filters?.UserId))
-            {
-                queryable = queryable.Where(i => i.Id == filters.UserId);
-            }
+            if (!string.IsNullOrEmpty(filters?.UserId)) queryable = queryable.Where(i => i.Id == filters.UserId);
 
             return queryable;
         }

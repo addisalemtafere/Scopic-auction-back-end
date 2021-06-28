@@ -43,13 +43,13 @@
                 this.options.ApiKey,
                 this.options.ApiSecret);
 
-            this.cloudinary = new Cloudinary(account);
+            cloudinary = new Cloudinary(account);
         }
 
         public async Task<MultiResponse<PictureResponseModel>> Handle(CreatePictureCommand request,
             CancellationToken cancellationToken)
         {
-            var item = await this.context
+            var item = await context
                 .Items
                 .Select(i => new
                 {
@@ -57,15 +57,10 @@
                     i.UserId
                 })
                 .SingleOrDefaultAsync(i => i.Id == request.ItemId, cancellationToken);
-            if (item.UserId != this.currentUserService.UserId)
-            {
-                throw new NotFoundException(nameof(Item));
-            }
+            if (item.UserId != currentUserService.UserId) throw new NotFoundException(nameof(Item));
 
             if (!request.Pictures.Any())
-            {
                 return new MultiResponse<PictureResponseModel>(new List<PictureResponseModel>());
-            }
 
             var uploadResults = new ConcurrentBag<ImageUploadResult>();
             foreach (var picture in request.Pictures)
@@ -77,7 +72,7 @@
                     File = new FileDescription(guid, picture.OpenReadStream()),
                     Folder = $"{request.ItemId}"
                 };
-                var uploadResult = await this.cloudinary.UploadAsync(uploadParams);
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
                 uploadResults.Add(uploadResult);
             }
 
@@ -88,12 +83,12 @@
                 Url = picture.SecureUri.AbsoluteUri
             }).ToList();
 
-            await this.context.Pictures.AddRangeAsync(picturesToAdd, cancellationToken);
-            await this.context.SaveChangesAsync(cancellationToken);
+            await context.Pictures.AddRangeAsync(picturesToAdd, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             var result =
                 new MultiResponse<PictureResponseModel>(picturesToAdd
-                    .Select(p => this.mapper.Map<PictureResponseModel>(p)).ToList());
+                    .Select(p => mapper.Map<PictureResponseModel>(p)).ToList());
             return result;
         }
     }

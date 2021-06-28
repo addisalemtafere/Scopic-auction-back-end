@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tI+CV5N6AvzoEAELX4IEMr1CXCJJhwBaSBGfz+1u4z+yD7SwBb//IBFWKvJ6J0XzRtrBuNU6zDU/dReZBR/+HQ==",
+  "dgSpecHash": "jUD4ajjGZmJTI9smN0U9Pj6leZoQquj8YkwngTXg79lUfe/p+MFb2ltZEej2wPAXUMrWL/eqXyKRkvssLq+GCA==",
   "success": true,
-  "projectFilePath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Common\\Common.csproj",
+  "projectFilePath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Common\\Common.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Addisalem\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

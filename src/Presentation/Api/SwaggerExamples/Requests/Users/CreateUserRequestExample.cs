@@ -6,6 +6,8 @@
     public class CreateUserRequestExample : IExamplesProvider<CreateUserCommand>
     {
         public CreateUserCommand GetExamples()
-            => new CreateUserCommand { Email = "test@test.com", FullName = "Melik Pehlivanov", Password = "Test123" };
+        {
+            return new() {Email = "test@test.com", FullName = "Melik Pehlivanov", Password = "Test123"};
+        }
     }
 }

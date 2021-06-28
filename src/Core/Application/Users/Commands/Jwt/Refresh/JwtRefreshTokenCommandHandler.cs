@@ -36,7 +36,7 @@
         public async Task<Response<AuthSuccessResponse>> Handle(JwtRefreshTokenCommand request,
             CancellationToken cancellationToken)
         {
-            var validatedToken = this.GetPrincipalFromToken(request.Token);
+            var validatedToken = GetPrincipalFromToken(request.Token);
 
             var expiryDateUnix =
                 long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
@@ -44,28 +44,26 @@
                 .AddSeconds(expiryDateUnix);
 
             var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
-            var storedRefreshToken = await this.Context
+            var storedRefreshToken = await Context
                 .RefreshTokens
                 .SingleOrDefaultAsync(t => t.Token == request.RefreshToken, cancellationToken);
 
             if (validatedToken == null
-                || expiryDateTimeUtc > this.DateTime.UtcNow
+                || expiryDateTimeUtc > DateTime.UtcNow
                 || storedRefreshToken == null
-                || this.DateTime.UtcNow > storedRefreshToken.ExpiryDate
+                || DateTime.UtcNow > storedRefreshToken.ExpiryDate
                 || storedRefreshToken.Invalidated
                 || storedRefreshToken.Used
                 || storedRefreshToken.JwtId != jti)
-            {
                 throw new BadRequestException(ExceptionMessages.User.InvalidRefreshToken);
-            }
 
-            this.Context.RefreshTokens.Remove(storedRefreshToken);
-            await this.Context.SaveChangesAsync(cancellationToken);
+            Context.RefreshTokens.Remove(storedRefreshToken);
+            await Context.SaveChangesAsync(cancellationToken);
 
             var userId = validatedToken.Claims.Single(x => x.Type == "id").Value;
-            var user = await this.UserManager.GetUserByIdAsync(userId);
+            var user = await UserManager.GetUserByIdAsync(userId);
 
-            return new Response<AuthSuccessResponse>(await this.GenerateAuthResponse(user.Id, user.UserName,
+            return new Response<AuthSuccessResponse>(await GenerateAuthResponse(user.Id, user.UserName,
                 cancellationToken));
         }
 
@@ -75,7 +73,7 @@
 
             try
             {
-                var clonedTokenValidationParameters = this.tokenValidationParameters.Clone();
+                var clonedTokenValidationParameters = tokenValidationParameters.Clone();
                 clonedTokenValidationParameters.ValidateLifetime = false;
                 var principal =
                     tokenHandler.ValidateToken(token, clonedTokenValidationParameters, out var validatedToken);
@@ -88,8 +86,10 @@
         }
 
         private static bool IsJwtWithValidSecurityAlgorithm(SecurityToken token)
-            => (token is JwtSecurityToken jwtSecurityToken)
-               && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
-                   StringComparison.InvariantCultureIgnoreCase);
+        {
+            return token is JwtSecurityToken jwtSecurityToken
+                   && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+                       StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

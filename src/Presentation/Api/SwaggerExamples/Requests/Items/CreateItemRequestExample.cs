@@ -9,7 +9,8 @@
         private const int Ten = 10;
 
         public CreateItemCommand GetExamples()
-            => new CreateItemCommand
+        {
+            return new()
             {
                 Title = "Some really expensive item",
                 Description = "This item was found in 1980.",
@@ -19,5 +20,6 @@
                 EndTime = DateTime.UtcNow.AddDays(Ten),
                 SubCategoryId = Guid.Parse("5AB7CAEF-9B24-4B6D-A7A5-08D7DFB08A49")
             };
+        }
     }
 }

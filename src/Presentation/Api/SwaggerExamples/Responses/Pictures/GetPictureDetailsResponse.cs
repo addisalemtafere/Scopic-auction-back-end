@@ -8,12 +8,14 @@
     public class GetPictureDetailsResponse : IExamplesProvider<Response<PictureDetailsResponseModel>>
     {
         public Response<PictureDetailsResponseModel> GetExamples()
-            => new Response<PictureDetailsResponseModel>(new PictureDetailsResponseModel
+        {
+            return new(new PictureDetailsResponseModel
             {
                 Id = Guid.NewGuid(),
                 ItemId = Guid.NewGuid(),
                 Url = "https://google.com",
-                ItemUserId = Guid.NewGuid().ToString(),
+                ItemUserId = Guid.NewGuid().ToString()
             });
+        }
     }
 }

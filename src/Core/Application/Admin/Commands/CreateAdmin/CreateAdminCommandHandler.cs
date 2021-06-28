@@ -22,21 +22,13 @@
         {
             //TODO: Add User as default role in db
             if (!request.Role.Equals(AppConstants.AdministratorRole))
-            {
                 throw new BadRequestException(ExceptionMessages.Admin.InvalidRole);
-            }
 
             var result =
-                await this.userManager.AddToRoleAsync(request.Email, request.Role, this.currentUserService.UserId);
-            if (!result.Succeeded && result.ErrorType == ErrorType.General)
-            {
-                throw new BadRequestException(result.Error);
-            }
+                await userManager.AddToRoleAsync(request.Email, request.Role, currentUserService.UserId);
+            if (!result.Succeeded && result.ErrorType == ErrorType.General) throw new BadRequestException(result.Error);
 
-            if (!result.Succeeded && result.ErrorType == ErrorType.TokenExpired)
-            {
-                throw new UnauthorizedException();
-            }
+            if (!result.Succeeded && result.ErrorType == ErrorType.TokenExpired) throw new UnauthorizedException();
 
             return Unit.Value;
         }

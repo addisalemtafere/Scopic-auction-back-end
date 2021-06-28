@@ -10,13 +10,14 @@
     public class ItemsListResponseModel : IExamplesProvider<PagedResponse<ListItemsResponseModel>>
     {
         public PagedResponse<ListItemsResponseModel> GetExamples()
-            => new PagedResponse<ListItemsResponseModel>
+        {
+            return new()
             {
                 PageNumber = 1,
                 PageSize = 3,
                 Data = new List<ListItemsResponseModel>
                 {
-                    new ListItemsResponseModel
+                    new()
                     {
                         Id = Guid.NewGuid(),
                         Title = "Some random title 1",
@@ -29,10 +30,10 @@
                         UserFullName = "test@test.com",
                         Pictures = new List<PictureResponseModel>
                         {
-                            new PictureResponseModel { Id = Guid.NewGuid(), Url = "Some example url here" }
+                            new() {Id = Guid.NewGuid(), Url = "Some example url here"}
                         }
                     },
-                    new ListItemsResponseModel
+                    new()
                     {
                         Id = Guid.NewGuid(),
                         Title = "Some random title 2",
@@ -45,10 +46,10 @@
                         UserFullName = "test1@test.com",
                         Pictures = new List<PictureResponseModel>
                         {
-                            new PictureResponseModel { Id = Guid.NewGuid(), Url = "Some example url here 2" }
+                            new() {Id = Guid.NewGuid(), Url = "Some example url here 2"}
                         }
                     },
-                    new ListItemsResponseModel
+                    new()
                     {
                         Id = Guid.NewGuid(),
                         Title = "Some random title 3",
@@ -62,5 +63,6 @@
                     }
                 }
             };
+        }
     }
 }

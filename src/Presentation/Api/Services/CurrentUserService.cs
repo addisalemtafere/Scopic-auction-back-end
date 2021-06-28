@@ -11,15 +11,15 @@
 
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            this.UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            this.IsAuthenticated = this.UserId != null;
-            this.hasAdminClaim = httpContextAccessor.HttpContext?.User?.IsInRole(AppConstants.AdministratorRole);
+            UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            IsAuthenticated = UserId != null;
+            hasAdminClaim = httpContextAccessor.HttpContext?.User?.IsInRole(AppConstants.AdministratorRole);
         }
 
         public string UserId { get; }
 
         public bool IsAuthenticated { get; }
 
-        public bool IsAdmin => this.hasAdminClaim ?? false;
+        public bool IsAdmin => hasAdminClaim ?? false;
     }
 }

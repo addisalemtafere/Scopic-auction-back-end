@@ -1,4 +1,3 @@
-
 using ScopicAuctionSystem.Infrastructure;
 
 namespace Api
@@ -23,7 +22,7 @@ namespace Api
     {
         public Startup(IConfiguration configuration)
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
         }
 
         private IConfiguration Configuration { get; }
@@ -36,15 +35,15 @@ namespace Api
             };
 
             services
-                .AddPersistence(this.Configuration)
+                .AddPersistence(Configuration)
                 .AddHostedService<MigrateDatabaseHostedService>()
-                .AddInfrastructure(this.Configuration)
+                .AddInfrastructure(Configuration)
                 .AddApplication()
-                .AddCloudinarySettings(this.Configuration)
-                .AddSendGridSettings(this.Configuration)
-                .AddJwtAuthentication(services.AddJwtSecret(this.Configuration))
+                .AddCloudinarySettings(Configuration)
+                .AddSendGridSettings(Configuration)
+                .AddJwtAuthentication(services.AddJwtSecret(Configuration))
                 .AddRequiredServices()
-                .AddRedisCache(this.Configuration)
+                .AddRedisCache(Configuration)
                 .AddSwagger()
                 .AddCors(options =>
                 {
@@ -67,10 +66,7 @@ namespace Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app
                 .UseHttpsRedirection()

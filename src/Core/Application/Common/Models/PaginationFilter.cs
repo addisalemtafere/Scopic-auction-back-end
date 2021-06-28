@@ -10,14 +10,14 @@
 
         public PaginationFilter()
         {
-            this.PageNumber = DefaultPageNumber;
-            this.PageSize = AppConstants.PageSize;
+            PageNumber = DefaultPageNumber;
+            PageSize = AppConstants.PageSize;
         }
 
         public PaginationFilter(int pageNumber, int pageSize)
         {
-            this.PageNumber = pageNumber < DefaultPageNumber ? DefaultPageNumber : pageNumber;
-            this.PageSize = pageSize >= AppConstants.PageSize || pageSize < 1 ? AppConstants.PageSize : pageSize;
+            PageNumber = pageNumber < DefaultPageNumber ? DefaultPageNumber : pageNumber;
+            PageSize = pageSize >= AppConstants.PageSize || pageSize < 1 ? AppConstants.PageSize : pageSize;
         }
 
         public int PageNumber { get; set; }

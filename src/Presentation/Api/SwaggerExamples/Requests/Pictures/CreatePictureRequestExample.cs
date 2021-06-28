@@ -9,10 +9,12 @@
     public class CreatePictureRequestExample : IExamplesProvider<CreatePictureCommand>
     {
         public CreatePictureCommand GetExamples()
-            => new CreatePictureCommand
+        {
+            return new()
             {
                 ItemId = Guid.NewGuid(),
                 Pictures = new List<IFormFile>()
             };
+        }
     }
 }

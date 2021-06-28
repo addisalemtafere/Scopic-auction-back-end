@@ -31,11 +31,11 @@
 
         public async Task<Unit> Handle(CreateBidCommand request, CancellationToken cancellationToken)
         {
-            await this.CheckWhetherItemIsEligibleForBidding(request, cancellationToken);
+            await CheckWhetherItemIsEligibleForBidding(request, cancellationToken);
 
-            var bid = this.mapper.Map<Bid>(request);
-            await this.context.Bids.AddAsync(bid, cancellationToken);
-            await this.context.SaveChangesAsync(cancellationToken);
+            var bid = mapper.Map<Bid>(request);
+            await context.Bids.AddAsync(bid, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
@@ -43,7 +43,7 @@
         private async Task CheckWhetherItemIsEligibleForBidding(CreateBidCommand request,
             CancellationToken cancellationToken)
         {
-            var item = await this.context
+            var item = await context
                 .Items
                 .Select(i => new
                 {
@@ -59,35 +59,23 @@
                 .Where(i => i.Id == request.ItemId)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if (item == null)
-            {
-                throw new NotFoundException(nameof(Item));
-            }
+            if (item == null) throw new NotFoundException(nameof(Item));
 
-            if (request.UserId != this.currentUserService.UserId)
-            {
-                throw new NotFoundException(nameof(Item));
-            }
+            if (request.UserId != currentUserService.UserId) throw new NotFoundException(nameof(Item));
 
-            if (item.StartTime >= this.dateTime.UtcNow)
-            {
+            if (item.StartTime >= dateTime.UtcNow)
                 //Bid hasn't started yet.
                 throw new BadRequestException(
                     string.Format(ExceptionMessages.Bid.BiddingNotStartedYet, request.ItemId));
-            }
 
-            if (item.EndTime <= this.dateTime.UtcNow)
-            {
+            if (item.EndTime <= dateTime.UtcNow)
                 // Bidding has ended
                 throw new BadRequestException(
                     string.Format(ExceptionMessages.Bid.BiddingHasEnded, request.ItemId));
-            }
 
             if (request.Amount <= item.HighestBidAmount
                 || request.Amount <= item.StartingPrice)
-            {
                 throw new BadRequestException(ExceptionMessages.Bid.InvalidBidAmount);
-            }
         }
     }
 }

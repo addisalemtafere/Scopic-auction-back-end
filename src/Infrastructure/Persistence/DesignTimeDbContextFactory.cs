@@ -16,7 +16,7 @@
         {
             var basePath = Directory.GetCurrentDirectory() +
                            string.Format("{0}../../Presentation{0}Api", Path.DirectorySeparatorChar);
-            return this.Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
+            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
@@ -34,16 +34,14 @@
 
             var connectionString = configuration.GetDefaultConnectionString();
 
-            return this.Create(connectionString);
+            return Create(connectionString);
         }
 
         private TContext Create(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
-            {
                 throw new ArgumentException($"Connection string '{connectionString}' is null or empty.",
                     nameof(connectionString));
-            }
 
             Console.WriteLine(
                 $"DesignTimeDbContextFactoryBase.Create(string): Connection string: '{connectionString}'.");
@@ -52,7 +50,7 @@
 
             optionsBuilder.UseSqlServer(connectionString);
 
-            return this.CreateNewInstance(optionsBuilder.Options);
+            return CreateNewInstance(optionsBuilder.Options);
         }
     }
 }

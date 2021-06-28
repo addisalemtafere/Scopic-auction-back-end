@@ -4,6 +4,6 @@ namespace Application.Common.Models
     {
         General,
         TokenExpired,
-        AccountNotConfirmed,
+        AccountNotConfirmed
     }
 }

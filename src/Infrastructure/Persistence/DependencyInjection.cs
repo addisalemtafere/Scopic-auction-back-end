@@ -1,5 +1,4 @@
-﻿
-using ScopicAuctionSystem.Infrastructure.Identity;
+﻿using ScopicAuctionSystem.Infrastructure.Identity;
 
 namespace Persistence
 {

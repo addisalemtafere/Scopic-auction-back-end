@@ -26,22 +26,18 @@
 
         public async Task<Unit> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
         {
-            var item = await this.context
+            var item = await context
                 .Items
                 .SingleOrDefaultAsync(i => i.Id == request.Id, cancellationToken);
 
             if (item == null
-                || item.UserId != this.currentUserService.UserId)
-            {
+                || item.UserId != currentUserService.UserId)
                 throw new NotFoundException(nameof(item));
-            }
 
-            if (!await this.context
+            if (!await context
                 .SubCategories
                 .AnyAsync(c => c.Id == request.SubCategoryId, cancellationToken))
-            {
                 throw new BadRequestException(ExceptionMessages.Item.SubCategoryDoesNotExist);
-            }
 
             item.Title = request.Title;
             item.Description = request.Description;
@@ -51,9 +47,9 @@
             item.EndTime = request.EndTime.ToUniversalTime();
             item.SubCategoryId = request.SubCategoryId;
 
-            this.context.Items.Update(item);
-            await this.context.SaveChangesAsync(cancellationToken);
-            await this.mediator.Send(new UpdatePictureCommand
+            context.Items.Update(item);
+            await context.SaveChangesAsync(cancellationToken);
+            await mediator.Send(new UpdatePictureCommand
                 {
                     ItemId = item.Id, PicturesToAdd = request.PicturesToAdd, PicturesToRemove = request.PicturesToRemove
                 },

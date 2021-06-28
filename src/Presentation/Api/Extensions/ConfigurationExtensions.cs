@@ -5,21 +5,33 @@
     public static class ConfigurationExtensions
     {
         public static IConfigurationSection GetJwtSecretSection(this IConfiguration configuration)
-            => configuration.GetSection("JwtSettings");
+        {
+            return configuration.GetSection("JwtSettings");
+        }
 
         public static IConfigurationSection GetRedisSection(this IConfiguration configuration)
-            => configuration.GetSection("RedisCacheSettings");
+        {
+            return configuration.GetSection("RedisCacheSettings");
+        }
 
         public static string GetSendGridApiKey(this IConfiguration configuration)
-            => configuration.GetSection("SendGrid:ApiKey").Value;
+        {
+            return configuration.GetSection("SendGrid:ApiKey").Value;
+        }
 
         public static string GetCloudinaryCloudName(this IConfiguration configuration)
-            => configuration.GetSection("Cloudinary:CloudName").Value;
+        {
+            return configuration.GetSection("Cloudinary:CloudName").Value;
+        }
 
         public static string GetCloudinaryApiKey(this IConfiguration configuration)
-            => configuration.GetSection("Cloudinary:ApiKey").Value;
+        {
+            return configuration.GetSection("Cloudinary:ApiKey").Value;
+        }
 
         public static string GetCloudinaryApiSecret(this IConfiguration configuration)
-            => configuration.GetSection("Cloudinary:ApiSecret").Value;
+        {
+            return configuration.GetSection("Cloudinary:ApiSecret").Value;
+        }
     }
 }

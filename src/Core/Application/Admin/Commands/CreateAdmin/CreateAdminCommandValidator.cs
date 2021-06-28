@@ -7,8 +7,8 @@
     {
         public CreateAdminCommandValidator()
         {
-            this.RuleFor(u => u.Email).NotEmpty().Matches(ModelConstants.User.EmailRegex);
-            this.RuleFor(u => u.Role).NotEmpty();
+            RuleFor(u => u.Email).NotEmpty().Matches(ModelConstants.User.EmailRegex);
+            RuleFor(u => u.Role).NotEmpty();
         }
     }
 }

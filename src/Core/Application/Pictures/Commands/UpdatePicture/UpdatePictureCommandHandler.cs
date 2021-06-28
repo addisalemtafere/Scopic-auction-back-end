@@ -29,7 +29,7 @@ namespace Application.Pictures.Commands.UpdatePicture
 
         public async Task<Unit> Handle(UpdatePictureCommand request, CancellationToken cancellationToken)
         {
-            var item = await this.context
+            var item = await context
                 .Items
                 .Select(i => new
                 {
@@ -37,25 +37,16 @@ namespace Application.Pictures.Commands.UpdatePicture
                     i.UserId
                 })
                 .SingleOrDefaultAsync(i => i.Id == request.ItemId, cancellationToken);
-            if (item.UserId != this.currentUserService.UserId)
-            {
-                throw new NotFoundException(nameof(Item));
-            }
+            if (item.UserId != currentUserService.UserId) throw new NotFoundException(nameof(Item));
 
             if (request.PicturesToAdd.Any())
-            {
-                await this.mediator.Send(new CreatePictureCommand
-                    { ItemId = request.ItemId, Pictures = request.PicturesToAdd }, cancellationToken);
-            }
+                await mediator.Send(new CreatePictureCommand
+                    {ItemId = request.ItemId, Pictures = request.PicturesToAdd}, cancellationToken);
 
             if (request.PicturesToRemove.Any())
-            {
                 foreach (var pictureToRemove in request.PicturesToRemove)
-                {
-                    await this.mediator.Send(new DeletePictureCommand
-                        { ItemId = request.ItemId, PictureId = pictureToRemove }, cancellationToken);
-                }
-            }
+                    await mediator.Send(new DeletePictureCommand
+                        {ItemId = request.ItemId, PictureId = pictureToRemove}, cancellationToken);
 
             return Unit.Value;
         }

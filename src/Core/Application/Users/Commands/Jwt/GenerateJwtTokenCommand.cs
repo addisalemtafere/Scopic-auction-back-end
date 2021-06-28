@@ -6,8 +6,8 @@
     {
         public GenerateJwtTokenCommand(string userId, string username)
         {
-            this.UserId = userId;
-            this.Username = username;
+            UserId = userId;
+            Username = username;
         }
 
         public string UserId { get; }

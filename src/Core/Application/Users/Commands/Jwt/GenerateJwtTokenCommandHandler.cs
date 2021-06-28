@@ -22,6 +22,8 @@
 
         public async Task<AuthSuccessResponse> Handle(GenerateJwtTokenCommand request,
             CancellationToken cancellationToken)
-            => await this.GenerateAuthResponse(request.UserId, request.Username, cancellationToken);
+        {
+            return await GenerateAuthResponse(request.UserId, request.Username, cancellationToken);
+        }
     }
 }

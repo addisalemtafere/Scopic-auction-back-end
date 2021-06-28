@@ -9,18 +9,20 @@
     public class SuccessfulPictureUploadResponseModel : IExamplesProvider<MultiResponse<PictureResponseModel>>
     {
         public MultiResponse<PictureResponseModel> GetExamples()
-            => new MultiResponse<PictureResponseModel>(new HashSet<PictureResponseModel>
+        {
+            return new(new HashSet<PictureResponseModel>
             {
-                new PictureResponseModel
+                new()
                 {
                     Id = Guid.NewGuid(),
                     Url = "image url (i.e https://google.com)"
                 },
-                new PictureResponseModel
+                new()
                 {
                     Id = Guid.NewGuid(),
                     Url = "Some random url"
                 }
             });
+        }
     }
 }

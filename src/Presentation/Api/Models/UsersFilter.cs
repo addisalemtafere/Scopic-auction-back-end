@@ -6,7 +6,6 @@
 
     public class UsersFilter : IMapWith<ListAllUsersQueryFilter>
     {
-        [FromQuery(Name = "userId")]
-        public string UserId { get; set; }
+        [FromQuery(Name = "userId")] public string UserId { get; set; }
     }
 }

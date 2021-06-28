@@ -3,5 +3,7 @@
     using Common.Models;
     using MediatR;
 
-    public class ListCategoriesQuery : IRequest<MultiResponse<ListCategoriesResponseModel>> { }
+    public class ListCategoriesQuery : IRequest<MultiResponse<ListCategoriesResponseModel>>
+    {
+    }
 }

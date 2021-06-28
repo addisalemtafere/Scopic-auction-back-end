@@ -19,7 +19,7 @@
         {
             this.currentUserService = currentUserService;
             this.logger = logger;
-            this.timer = new Stopwatch();
+            timer = new Stopwatch();
         }
 
 
@@ -28,22 +28,19 @@
             CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-            this.timer.Start();
+            timer.Start();
 
             var response = await next();
 
-            this.timer.Stop();
+            timer.Stop();
 
-            if (this.timer.ElapsedMilliseconds <= MaxResponseTime)
-            {
-                return response;
-            }
+            if (timer.ElapsedMilliseconds <= MaxResponseTime) return response;
 
             var name = typeof(TRequest).Name;
 
-            this.logger.LogWarning(
+            logger.LogWarning(
                 "Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) @userId {@UserId} {@Request}",
-                name, this.timer.ElapsedMilliseconds, this.currentUserService.UserId, request);
+                name, timer.ElapsedMilliseconds, currentUserService.UserId, request);
 
             return response;
         }

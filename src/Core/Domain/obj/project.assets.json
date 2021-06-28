@@ -747,11 +747,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Domain\\Domain.csproj",
+      "projectUniqueName": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Domain\\Domain.csproj",
+      "projectPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\Addisalem\\.nuget\\packages\\",
-      "outputPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Domain\\obj\\",
+      "outputPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -761,7 +761,7 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net5.0"
+        "netcoreapp5.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},

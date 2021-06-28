@@ -8,7 +8,7 @@
     {
         public GetItemDetailsQuery(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
 
         public Guid Id { get; set; }

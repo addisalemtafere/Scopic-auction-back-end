@@ -2,5 +2,7 @@
 {
     using System;
 
-    public class UnauthorizedException : Exception { }
+    public class UnauthorizedException : Exception
+    {
+    }
 }

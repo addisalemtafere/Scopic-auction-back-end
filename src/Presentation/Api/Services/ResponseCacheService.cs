@@ -17,12 +17,9 @@
 
         public async Task CacheResponseAsync(string key, object response, TimeSpan cachingTime)
         {
-            if (response == null)
-            {
-                return;
-            }
+            if (response == null) return;
 
-            await this.distributedCache
+            await distributedCache
                 .SetStringAsync(
                     key,
                     JsonConvert.SerializeObject(response),
@@ -33,6 +30,8 @@
         }
 
         public async Task<string> GetCachedResponseAsync(string cacheKey)
-            => await this.distributedCache.GetStringAsync(cacheKey);
+        {
+            return await distributedCache.GetStringAsync(cacheKey);
+        }
     }
 }

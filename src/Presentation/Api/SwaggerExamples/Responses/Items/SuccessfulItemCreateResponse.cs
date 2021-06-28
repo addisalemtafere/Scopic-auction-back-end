@@ -8,6 +8,8 @@
     public class SuccessfulItemCreateResponse : IExamplesProvider<Response<ItemResponseModel>>
     {
         public Response<ItemResponseModel> GetExamples()
-            => new Response<ItemResponseModel>(new ItemResponseModel(Guid.NewGuid()));
+        {
+            return new(new ItemResponseModel(Guid.NewGuid()));
+        }
     }
 }

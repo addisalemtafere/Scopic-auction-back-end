@@ -26,19 +26,16 @@
         public async Task<Response<AuthSuccessResponse>> Handle(LoginUserCommand request,
             CancellationToken cancellationToken)
         {
-            var (result, userId) = await this.userManager.SignIn(request.Email, request.Password);
+            var (result, userId) = await userManager.SignIn(request.Email, request.Password);
             if (!result.Succeeded && result.ErrorType == ErrorType.AccountNotConfirmed)
             {
-                var token = await this.userManager.GenerateEmailConfirmationCode(request.Email);
-                await this.emailSender.SendConfirmationEmail(request.Email, token);
+                var token = await userManager.GenerateEmailConfirmationCode(request.Email);
+                await emailSender.SendConfirmationEmail(request.Email, token);
             }
 
-            if (!result.Succeeded && result.ErrorType == ErrorType.General)
-            {
-                throw new BadRequestException(result.Error);
-            }
+            if (!result.Succeeded && result.ErrorType == ErrorType.General) throw new BadRequestException(result.Error);
 
-            var model = await this.mediator
+            var model = await mediator
                 .Send(new GenerateJwtTokenCommand(userId, request.Email), cancellationToken);
             return new Response<AuthSuccessResponse>(model);
         }

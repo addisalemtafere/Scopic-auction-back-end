@@ -41,7 +41,7 @@
                 {
                     Content = cachedResponse,
                     ContentType = "application/json",
-                    StatusCode = 200,
+                    StatusCode = 200
                 };
 
                 context.Result = contentResult;
@@ -52,9 +52,8 @@
             var executedContext = await next();
 
             if (executedContext.Result is OkObjectResult okObjectResult)
-            {
-                await cacheService.CacheResponseAsync(cacheKey, okObjectResult.Value, TimeSpan.FromMinutes(this.cachingTimeInMinutes));
-            }
+                await cacheService.CacheResponseAsync(cacheKey, okObjectResult.Value,
+                    TimeSpan.FromMinutes(cachingTimeInMinutes));
         }
 
         private static string GenerateCacheKey(HttpRequest request)
@@ -63,10 +62,7 @@
 
             builder.Append($"{request.Path}");
 
-            foreach (var (key, value) in request.Query.OrderBy(x => x.Key))
-            {
-                builder.Append($"|{key}-{value}");
-            }
+            foreach (var (key, value) in request.Query.OrderBy(x => x.Key)) builder.Append($"|{key}-{value}");
 
             return builder.ToString();
         }

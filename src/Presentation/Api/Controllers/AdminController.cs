@@ -39,13 +39,14 @@
         [SwaggerResponse(
             StatusCodes.Status401Unauthorized,
             SwaggerDocumentation.UnauthorizedDescriptionMessage)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQuery paginationQuery, [FromQuery] UsersFilter filters)
+        public async Task<IActionResult> Get([FromQuery] PaginationQuery paginationQuery,
+            [FromQuery] UsersFilter filters)
         {
-            var paginationFilter = this.mapper.Map<PaginationFilter>(paginationQuery);
-            var model = this.mapper.Map<ListAllUsersQuery>(paginationFilter);
-            model.Filters = this.mapper.Map<ListAllUsersQueryFilter>(filters);
-            var result = await this.Mediator.Send(model);
-            return this.Ok(result);
+            var paginationFilter = mapper.Map<PaginationFilter>(paginationQuery);
+            var model = mapper.Map<ListAllUsersQuery>(paginationFilter);
+            model.Filters = mapper.Map<ListAllUsersQueryFilter>(filters);
+            var result = await Mediator.Send(model);
+            return Ok(result);
         }
 
         /// <summary>
@@ -63,8 +64,8 @@
             SwaggerDocumentation.UnauthorizedDescriptionMessage)]
         public async Task<IActionResult> Post([FromBody] CreateAdminCommand model)
         {
-            await this.Mediator.Send(model);
-            return this.NoContent();
+            await Mediator.Send(model);
+            return NoContent();
         }
 
         /// <summary>
@@ -82,8 +83,8 @@
             SwaggerDocumentation.UnauthorizedDescriptionMessage)]
         public async Task<IActionResult> Delete([FromBody] DeleteAdminCommand model)
         {
-            await this.Mediator.Send(model);
-            return this.NoContent();
+            await Mediator.Send(model);
+            return NoContent();
         }
     }
 }

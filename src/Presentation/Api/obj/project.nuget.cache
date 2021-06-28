@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "s/uDMUzlH43Tl1zgnu+7/ku2NhA/EOlMsh1x55nhBRVIg1DTcLeYsrScCuTscA0pNLk8glOnx5FgWoWI5eVAbQ==",
+  "dgSpecHash": "oiY2WIovUviz61BDEtdhoSmqiGMnonb4NBNr9KJ8yWn3yACV0NWd37F/py700EIIJmDshygsWCPvLtjxfSdARA==",
   "success": true,
-  "projectFilePath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Presentation\\Api\\Api.csproj",
+  "projectFilePath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Presentation\\Api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Addisalem\\.nuget\\packages\\automapper\\10.0.0\\automapper.10.0.0.nupkg.sha512",
     "C:\\Users\\Addisalem\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",

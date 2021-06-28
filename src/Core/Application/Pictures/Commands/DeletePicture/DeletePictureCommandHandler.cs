@@ -40,18 +40,18 @@
                 this.options.ApiKey,
                 this.options.ApiSecret);
 
-            this.cloudinary = new Cloudinary(account);
+            cloudinary = new Cloudinary(account);
         }
 
         public async Task Handle(ItemDeletedNotification notification, CancellationToken cancellationToken)
         {
-            await this.cloudinary.DeleteResourcesByPrefixAsync($"{notification.ItemId}/");
-            await this.cloudinary.DeleteFolderAsync($"{notification.ItemId}");
+            await cloudinary.DeleteResourcesByPrefixAsync($"{notification.ItemId}/");
+            await cloudinary.DeleteFolderAsync($"{notification.ItemId}");
         }
 
         public async Task<Unit> Handle(DeletePictureCommand request, CancellationToken cancellationToken)
         {
-            var pictureToRemove = await this.context
+            var pictureToRemove = await context
                 .Pictures
                 .Include(p => p.Item)
                 .Where(p => p.Id == request.PictureId)
@@ -59,30 +59,27 @@
 
             if (
                 pictureToRemove == null
-                || pictureToRemove.Item.UserId != this.currentUserService.UserId
+                || pictureToRemove.Item.UserId != currentUserService.UserId
                 || pictureToRemove.ItemId != request.ItemId)
-            {
                 throw new NotFoundException(nameof(Picture));
-            }
 
-            await this.cloudinary.DeleteResourcesByPrefixAsync($"{request.ItemId}/{request.PictureId}");
-            this.context.Pictures.Remove(pictureToRemove);
-            await this.context.SaveChangesAsync(cancellationToken);
+            await cloudinary.DeleteResourcesByPrefixAsync($"{request.ItemId}/{request.PictureId}");
+            context.Pictures.Remove(pictureToRemove);
+            await context.SaveChangesAsync(cancellationToken);
 
-            var pictures = await this.context
+            var pictures = await context
                 .Pictures
                 .Where(p => p.ItemId == request.ItemId)
                 .AnyAsync(cancellationToken);
 
-            if (!pictures)
-            {
-                await this.AddDefaultPicture(request.ItemId);
-            }
+            if (!pictures) await AddDefaultPicture(request.ItemId);
 
             return Unit.Value;
         }
 
         private async Task AddDefaultPicture(Guid itemId)
-            => await this.mediator.Send(new CreatePictureCommand { ItemId = itemId });
+        {
+            await mediator.Send(new CreatePictureCommand {ItemId = itemId});
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace Application.Pictures.Commands.UpdatePicture
     {
         public UpdatePictureCommandValidator()
         {
-            this.RuleFor(p => p.Id).NotEmpty();
+            RuleFor(p => p.Id).NotEmpty();
         }
     }
 }

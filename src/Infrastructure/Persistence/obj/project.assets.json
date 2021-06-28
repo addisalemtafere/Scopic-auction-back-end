@@ -6516,11 +6516,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Infrastructure\\Persistence\\Persistence.csproj",
+      "projectUniqueName": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Infrastructure\\Persistence\\Persistence.csproj",
       "projectName": "Persistence",
-      "projectPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Infrastructure\\Persistence\\Persistence.csproj",
+      "projectPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Infrastructure\\Persistence\\Persistence.csproj",
       "packagesPath": "C:\\Users\\Addisalem\\.nuget\\packages\\",
-      "outputPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Infrastructure\\Persistence\\obj\\",
+      "outputPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Infrastructure\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -6530,7 +6530,7 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net5.0"
+        "netcoreapp5.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -6541,14 +6541,14 @@
         "net5.0": {
           "targetAlias": "netcoreapp5.0",
           "projectReferences": {
-            "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Application\\Application.csproj": {
-              "projectPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Application\\Application.csproj"
+            "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Application\\Application.csproj": {
+              "projectPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Application\\Application.csproj"
             },
-            "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Common\\Common.csproj": {
-              "projectPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Core\\Common\\Common.csproj"
+            "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Common\\Common.csproj": {
+              "projectPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Core\\Common\\Common.csproj"
             },
-            "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Infrastructure\\Scopic.Infrastructure\\Scopic.Infrastructure.csproj": {
-              "projectPath": "D:\\JOB\\Scopic\\Last-auction\\AuctionSystem\\src\\Infrastructure\\Scopic.Infrastructure\\Scopic.Infrastructure.csproj"
+            "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Infrastructure\\Scopic.Infrastructure\\Scopic.Infrastructure.csproj": {
+              "projectPath": "D:\\JOB\\Scopic\\Last-auction\\ScopicAuction\\src\\Infrastructure\\Scopic.Infrastructure\\Scopic.Infrastructure.csproj"
             }
           }
         }

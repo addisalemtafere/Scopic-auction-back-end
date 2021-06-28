@@ -6,7 +6,7 @@
     {
         public ItemResponseModel(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
 
         public Guid Id { get; }

@@ -21,8 +21,8 @@
         {
             var name = typeof(TRequest).Name;
 
-            this.logger.LogInformation("AuctionSystem Request: {Name} {@UserId} {@Request}",
-                name, this.currentUserService.UserId, request);
+            logger.LogInformation("AuctionSystem Request: {Name} {@UserId} {@Request}",
+                name, currentUserService.UserId, request);
 
             return Task.CompletedTask;
         }

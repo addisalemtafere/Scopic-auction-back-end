@@ -28,14 +28,14 @@
 
         public async Task SeedAllAsync(CancellationToken cancellationToken)
         {
-            await this.SeedUsers(cancellationToken);
-            await SeedCategories(this.context, cancellationToken);
-            await this.SeedItems(this.context, this.userManager, cancellationToken);
+            await SeedUsers(cancellationToken);
+            await SeedCategories(context, cancellationToken);
+            await SeedItems(context, userManager, cancellationToken);
         }
 
         private async Task SeedUsers(CancellationToken cancellationToken)
         {
-            if (!await this.context.Users.AnyAsync())
+            if (!await context.Users.AnyAsync())
             {
                 var allUsers = new List<AuctionUser>();
                 for (var i = 1; i <= 2; i++)
@@ -53,15 +53,15 @@
 
                 foreach (var user in allUsers)
                 {
-                    await this.userManager.CreateUserAsync(user, "test123");
-                    await this.context.RefreshTokens.AddAsync(new RefreshToken
+                    await userManager.CreateUserAsync(user, "test123");
+                    await context.RefreshTokens.AddAsync(new RefreshToken
                     {
                         Token = Guid.NewGuid(),
                         JwtId = Guid.NewGuid().ToString(),
-                        CreationDate = this.dateTime.UtcNow,
-                        ExpiryDate = this.dateTime.UtcNow.AddMonths(AppConstants.RefreshTokenExpirationTimeInMonths),
+                        CreationDate = dateTime.UtcNow,
+                        ExpiryDate = dateTime.UtcNow.AddMonths(AppConstants.RefreshTokenExpirationTimeInMonths),
                         Invalidated = false,
-                        UserId = user.Id,
+                        UserId = user.Id
                     });
                 }
 
@@ -73,15 +73,17 @@
                     EmailConfirmed = true
                 };
 
-                await this.userManager.CreateUserAsync(admin, "admin123");
-                await this.SeedAdminRole();
-                await this.userManager.AddToRoleAsync(admin, AppConstants.AdministratorRole);
-                await this.context.SaveChangesAsync(cancellationToken);
+                await userManager.CreateUserAsync(admin, "admin123");
+                await SeedAdminRole();
+                await userManager.AddToRoleAsync(admin, AppConstants.AdministratorRole);
+                await context.SaveChangesAsync(cancellationToken);
             }
         }
 
         private async Task SeedAdminRole()
-            => await this.userManager.CreateRoleAsync(new IdentityRole(AppConstants.AdministratorRole));
+        {
+            await userManager.CreateRoleAsync(new IdentityRole(AppConstants.AdministratorRole));
+        }
 
         private static async Task SeedCategories(IAuctionSystemDbContext dbContext, CancellationToken cancellationToken)
         {
@@ -121,7 +123,7 @@
                     var i = 1;
                     foreach (var subCategory in category.SubCategories)
                     {
-                        var startTime = this.dateTime.UtcNow.AddDays(random.Next(0, 5)).ToUniversalTime();
+                        var startTime = dateTime.UtcNow.AddDays(random.Next(0, 5)).ToUniversalTime();
                         var item = new Item
                         {
                             Description = $"Test Description_{i}",
@@ -133,7 +135,7 @@
                             SubCategoryId = subCategory.Id,
                             Pictures = new List<Picture>
                             {
-                                new Picture { Url = AppConstants.DefaultPictureUrl, Created = this.dateTime.UtcNow }
+                                new() {Url = AppConstants.DefaultPictureUrl, Created = dateTime.UtcNow}
                             },
                             UserId = await manager.GetFirstUserId()
                         };

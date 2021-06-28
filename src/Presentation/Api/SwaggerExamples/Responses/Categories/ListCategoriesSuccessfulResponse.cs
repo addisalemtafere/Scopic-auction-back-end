@@ -9,32 +9,34 @@
     public class ListCategoriesSuccessfulResponse : IExamplesProvider<MultiResponse<ListCategoriesResponseModel>>
     {
         public MultiResponse<ListCategoriesResponseModel> GetExamples()
-            => new MultiResponse<ListCategoriesResponseModel>(
+        {
+            return new(
                 new List<ListCategoriesResponseModel>
                 {
-                    new ListCategoriesResponseModel
+                    new()
                     {
                         Id = Guid.NewGuid(),
                         Name = "Art",
                         SubCategories = new List<SubCategoriesDto>
                         {
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Drawings" },
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Photography" },
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Sculptures" }
+                            new() {Id = Guid.NewGuid(), Name = "Drawings"},
+                            new() {Id = Guid.NewGuid(), Name = "Photography"},
+                            new() {Id = Guid.NewGuid(), Name = "Sculptures"}
                         }
                     },
-                    new ListCategoriesResponseModel
+                    new()
                     {
                         Id = Guid.NewGuid(),
                         Name = "Jewelry",
                         SubCategories = new List<SubCategoriesDto>
                         {
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Necklaces & Pendants" },
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Brooches & Pins" },
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Earrings" },
-                            new SubCategoriesDto { Id = Guid.NewGuid(), Name = "Rings" }
+                            new() {Id = Guid.NewGuid(), Name = "Necklaces & Pendants"},
+                            new() {Id = Guid.NewGuid(), Name = "Brooches & Pins"},
+                            new() {Id = Guid.NewGuid(), Name = "Earrings"},
+                            new() {Id = Guid.NewGuid(), Name = "Rings"}
                         }
                     }
                 });
+        }
     }
 }

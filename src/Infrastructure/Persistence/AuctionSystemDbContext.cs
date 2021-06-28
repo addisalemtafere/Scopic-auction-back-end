@@ -15,7 +15,9 @@
         private readonly IDateTime dateTime;
 
         public AuctionSystemDbContext(DbContextOptions<AuctionSystemDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         public AuctionSystemDbContext(
             DbContextOptions<AuctionSystemDbContext> options,
@@ -34,22 +36,20 @@
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
-            foreach (var entry in this.ChangeTracker.Entries<AuditableEntity>())
-            {
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = this.currentUserService?.UserId;
-                        entry.Entity.Created = this.dateTime.UtcNow;
+                        entry.Entity.CreatedBy = currentUserService?.UserId;
+                        entry.Entity.Created = dateTime.UtcNow;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedBy = this.currentUserService?.UserId;
-                        entry.Entity.LastModified = this.dateTime.UtcNow;
+                        entry.Entity.LastModifiedBy = currentUserService?.UserId;
+                        entry.Entity.LastModified = dateTime.UtcNow;
                         break;
                 }
-            }
 
             return base.SaveChangesAsync(cancellationToken);
         }

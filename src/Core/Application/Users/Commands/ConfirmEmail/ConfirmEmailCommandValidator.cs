@@ -7,8 +7,8 @@ namespace Application.Users.Commands.ConfirmEmail
     {
         public ConfirmEmailCommandValidator()
         {
-            this.RuleFor(p => p.Code).NotEmpty();
-            this.RuleFor(p => p.Email).NotEmpty().Matches(ModelConstants.User.EmailRegex);
+            RuleFor(p => p.Code).NotEmpty();
+            RuleFor(p => p.Email).NotEmpty().Matches(ModelConstants.User.EmailRegex);
         }
     }
 }

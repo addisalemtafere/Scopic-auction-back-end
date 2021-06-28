@@ -4,7 +4,7 @@
     {
         public Response(T data)
         {
-            this.Data = data;
+            Data = data;
         }
 
         public T Data { get; }

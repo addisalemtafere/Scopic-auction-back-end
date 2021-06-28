@@ -19,7 +19,7 @@
 
         public async Task<bool> SendEmailAsync(string sender, string receiver, string subject, string htmlMessage)
         {
-            var client = new SendGridClient(this.options.SendGridApiKey);
+            var client = new SendGridClient(options.SendGridApiKey);
             var from = new EmailAddress(sender);
             var to = new EmailAddress(receiver, receiver);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, htmlMessage, htmlMessage);
