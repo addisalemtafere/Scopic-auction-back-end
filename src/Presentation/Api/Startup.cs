@@ -1,9 +1,8 @@
-using ScopicAuctionSystem.Infrastructure;
-
 namespace Api
 {
     using Application;
     using Application.Users.Commands.CreateUser;
+    using AuctionSystem.Infrastructure;
     using Extensions;
     using FluentValidation.AspNetCore;
     using Hubs;
@@ -22,7 +21,7 @@ namespace Api
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         private IConfiguration Configuration { get; }
@@ -35,24 +34,22 @@ namespace Api
             };
 
             services
-                .AddPersistence(Configuration)
+                .AddPersistence(this.Configuration)
                 .AddHostedService<MigrateDatabaseHostedService>()
-                .AddInfrastructure(Configuration)
+                .AddInfrastructure(this.Configuration)
                 .AddApplication()
-                .AddCloudinarySettings(Configuration)
-                .AddSendGridSettings(Configuration)
-                .AddJwtAuthentication(services.AddJwtSecret(Configuration))
+                .AddCloudinarySettings(this.Configuration)
+                .AddSendGridSettings(this.Configuration)
+                .AddJwtAuthentication(services.AddJwtSecret(this.Configuration))
                 .AddRequiredServices()
-                .AddRedisCache(Configuration)
+                .AddRedisCache(this.Configuration)
                 .AddSwagger()
                 .AddCors(options =>
                 {
                     options.AddDefaultPolicy(
                         builder =>
                         {
-                            builder.WithOrigins("http://localhost:4200",
-                                "https://localhost:4200");
-                            builder.AllowCredentials();
+                            builder.AllowAnyOrigin();
                             builder.AllowAnyMethod();
                             builder.AllowAnyHeader();
                         });
@@ -66,7 +63,10 @@ namespace Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app
                 .UseHttpsRedirection()

@@ -23,14 +23,22 @@
         {
             //TODO: Add User as default role in db
             if (!request.Role.Equals(AppConstants.AdministratorRole))
+            {
                 throw new BadRequestException(ExceptionMessages.Admin.InvalidRole);
+            }
 
             var result =
-                await userManager.RemoveFromRoleAsync(request.Email, request.Role, currentUserService.UserId,
+                await this.userManager.RemoveFromRoleAsync(request.Email, request.Role, this.currentUserService.UserId,
                     cancellationToken);
-            if (!result.Succeeded && result.ErrorType == ErrorType.General) throw new BadRequestException(result.Error);
+            if (!result.Succeeded && result.ErrorType == ErrorType.General)
+            {
+                throw new BadRequestException(result.Error);
+            }
 
-            if (!result.Succeeded && result.ErrorType == ErrorType.TokenExpired) throw new UnauthorizedException();
+            if (!result.Succeeded && result.ErrorType == ErrorType.TokenExpired)
+            {
+                throw new UnauthorizedException();
+            }
 
             return Unit.Value;
         }

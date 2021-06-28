@@ -23,7 +23,7 @@
         {
             try
             {
-                await next(context);
+                await this.next(context);
             }
             catch (Exception ex)
             {
@@ -90,8 +90,6 @@
     public static class CustomExceptionHandlerMiddlewareExtensions
     {
         public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<CustomExceptionHandlerMiddleware>();
-        }
+            => builder.UseMiddleware<CustomExceptionHandlerMiddleware>();
     }
 }

@@ -6,8 +6,6 @@
     public class DeleteAdminRequestExample : IExamplesProvider<DeleteAdminCommand>
     {
         public DeleteAdminCommand GetExamples()
-        {
-            return new() {Email = "admin@admin.com", Role = "Administrator"};
-        }
+            => new DeleteAdminCommand { Email = "admin@admin.com", Role = "Administrator" };
     }
 }

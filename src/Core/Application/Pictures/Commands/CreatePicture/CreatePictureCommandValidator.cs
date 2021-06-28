@@ -6,7 +6,7 @@
     {
         public CreatePictureCommandValidator()
         {
-            RuleFor(p => p.ItemId).NotEmpty();
+            this.RuleFor(p => p.ItemId).NotEmpty();
         }
     }
 }

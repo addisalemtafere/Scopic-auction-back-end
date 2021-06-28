@@ -20,11 +20,14 @@
 
         public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var result = await userManager.CreateUserAsync(request.Email, request.Password, request.FullName);
-            if (!result.Succeeded) throw new BadRequestException(ExceptionMessages.User.UserNotCreatedSuccessfully);
+            var result = await this.userManager.CreateUserAsync(request.Email, request.Password, request.FullName);
+            if (!result.Succeeded)
+            {
+                throw new BadRequestException(ExceptionMessages.User.UserNotCreatedSuccessfully);
+            }
 
-            var token = await userManager.GenerateEmailConfirmationCode(request.Email);
-            await emailSender.SendConfirmationEmail(request.Email, token);
+            var token = await this.userManager.GenerateEmailConfirmationCode(request.Email);
+            await this.emailSender.SendConfirmationEmail(request.Email, token);
 
             return Unit.Value;
         }

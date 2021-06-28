@@ -86,14 +86,11 @@
         }
 
         public static IServiceCollection AddRequiredServices(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddScoped<ICurrentUserService, CurrentUserService>();
-        }
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
-        {
-            return services
+            => services
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc(
@@ -143,7 +140,6 @@
                     c.AddFluentValidationRules();
                 })
                 .AddSwaggerExamplesFromAssemblyOf<Startup>();
-        }
 
         public static IServiceCollection AddRedisCache(
             this IServiceCollection services,
@@ -153,7 +149,10 @@
             configuration.GetRedisSection().Bind(redisCacheSettings);
             services.AddSingleton(redisCacheSettings);
 
-            if (!redisCacheSettings.Enabled) return services;
+            if (!redisCacheSettings.Enabled)
+            {
+                return services;
+            }
 
             services.AddStackExchangeRedisCache(options => options.Configuration = redisCacheSettings.ConnectionString);
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();

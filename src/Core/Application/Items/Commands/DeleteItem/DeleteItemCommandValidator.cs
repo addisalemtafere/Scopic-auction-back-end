@@ -6,7 +6,7 @@
     {
         public DeleteItemCommandValidator()
         {
-            RuleFor(p => p.Id).NotEmpty();
+            this.RuleFor(p => p.Id).NotEmpty();
         }
     }
 }

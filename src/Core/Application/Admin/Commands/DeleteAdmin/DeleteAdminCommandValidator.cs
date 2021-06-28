@@ -7,8 +7,8 @@
     {
         public DeleteAdminCommandValidator()
         {
-            RuleFor(u => u.Email).NotEmpty().Matches(ModelConstants.User.EmailRegex);
-            RuleFor(u => u.Role).NotEmpty();
+            this.RuleFor(u => u.Email).NotEmpty().Matches(ModelConstants.User.EmailRegex);
+            this.RuleFor(u => u.Role).NotEmpty();
         }
     }
 }

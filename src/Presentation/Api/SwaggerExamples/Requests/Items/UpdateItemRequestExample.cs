@@ -7,8 +7,7 @@
     public class UpdateItemRequestExample : IExamplesProvider<UpdateItemCommand>
     {
         public UpdateItemCommand GetExamples()
-        {
-            return new()
+            => new UpdateItemCommand
             {
                 Id = Guid.NewGuid(),
                 Title = "New title",
@@ -19,6 +18,5 @@
                 EndTime = DateTime.UtcNow.AddYears(1),
                 SubCategoryId = Guid.NewGuid()
             };
-        }
     }
 }

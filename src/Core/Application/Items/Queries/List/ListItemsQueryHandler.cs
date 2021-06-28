@@ -32,21 +32,23 @@
             CancellationToken cancellationToken)
         {
             var skipCount = (request.PageNumber - 1) * request.PageSize;
-            var queryable = context
+            var queryable = this.context
                 .Items
                 .Include(i => i.Pictures)
                 .Include(u => u.User)
                 .AsQueryable();
 
-            var totalItemsCount = await context.Items.CountAsync(cancellationToken);
+            var totalItemsCount = await this.context.Items.CountAsync(cancellationToken);
             if (request?.Filters == null)
+            {
                 return PaginationHelper.CreatePaginatedResponse(request, await queryable
                     .Skip(skipCount)
                     .Take(request.PageSize)
-                    .ProjectTo<ListItemsResponseModel>(mapper.ConfigurationProvider)
+                    .ProjectTo<ListItemsResponseModel>(this.mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken), totalItemsCount);
+            }
 
-            queryable = AddFiltersOnQuery(request.Filters, queryable);
+            queryable = this.AddFiltersOnQuery(request.Filters, queryable);
             totalItemsCount = await queryable.CountAsync(cancellationToken);
             var itemsList = await queryable
                 .Skip(skipCount)
@@ -54,7 +56,7 @@
                 .ToListAsync(cancellationToken);
 
             var items = itemsList
-                .Select(mapper.Map<ListItemsResponseModel>)
+                .Select(this.mapper.Map<ListItemsResponseModel>)
                 .ToList();
 
             var result = PaginationHelper.CreatePaginatedResponse(request, items, totalItemsCount);
@@ -64,29 +66,50 @@
         private IQueryable<Item> AddFiltersOnQuery(ListAllItemsQueryFilter filters, IQueryable<Item> queryable)
         {
             if (!string.IsNullOrEmpty(filters?.Title))
+            {
                 queryable = queryable.Where(i => i.Title.ToLower().Contains(filters.Title.ToLower()));
+            }
 
-            if (!string.IsNullOrEmpty(filters?.UserId)) queryable = queryable.Where(i => i.UserId == filters.UserId);
+            if (!string.IsNullOrEmpty(filters?.UserId))
+            {
+                queryable = queryable.Where(i => i.UserId == filters.UserId);
+            }
 
             if (filters?.GetLiveItems == true)
+            {
                 queryable = queryable.Where(i =>
-                    i.StartTime < dateTime.UtcNow && i.EndTime > dateTime.UtcNow);
+                    i.StartTime < this.dateTime.UtcNow && i.EndTime > this.dateTime.UtcNow);
+            }
 
-            if (filters?.MinPrice != null) queryable = queryable.Where(i => i.StartingPrice >= filters.MinPrice);
+            if (filters?.MinPrice != null)
+            {
+                queryable = queryable.Where(i => i.StartingPrice >= filters.MinPrice);
+            }
 
-            if (filters?.MaxPrice != null) queryable = queryable.Where(i => i.StartingPrice <= filters.MaxPrice);
+            if (filters?.MaxPrice != null)
+            {
+                queryable = queryable.Where(i => i.StartingPrice <= filters.MaxPrice);
+            }
 
             if (filters?.StartTime != null)
+            {
                 queryable = queryable.Where(i => i.StartTime >= filters.StartTime.Value.ToUniversalTime());
+            }
 
             if (filters?.EndTime != null)
+            {
                 queryable = queryable.Where(i => i.EndTime <= filters.EndTime.Value.ToUniversalTime());
+            }
 
             if (filters?.MinimumPicturesCount != null)
+            {
                 queryable = queryable.Where(i => i.Pictures.Count >= filters.MinimumPicturesCount);
+            }
 
             if (filters?.SubCategoryId != Guid.Empty)
+            {
                 queryable = queryable.Where(i => i.SubCategoryId == filters.SubCategoryId);
+            }
 
             return queryable;
         }

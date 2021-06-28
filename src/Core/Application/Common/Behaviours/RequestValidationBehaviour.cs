@@ -24,13 +24,16 @@
         {
             var context = new ValidationContext(request);
 
-            var failures = validators
+            var failures = this.validators
                 .Select(v => v.Validate(context))
                 .SelectMany(result => result.Errors)
                 .Where(f => f != null)
                 .ToList();
 
-            if (failures.Count != 0) throw new ValidationException(failures);
+            if (failures.Count != 0)
+            {
+                throw new ValidationException(failures);
+            }
 
             return next();
         }

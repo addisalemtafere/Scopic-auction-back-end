@@ -9,7 +9,7 @@
     {
         public DefaultProfile()
         {
-            ConfigureMapping();
+            this.ConfigureMapping();
         }
 
         private void ConfigureMapping()
@@ -45,8 +45,8 @@
             //Create bidirectional mapping for all types implementing the IMapWith<TModel> interface
             foreach (var mapping in withBidirectionalMapping)
             {
-                CreateMap(mapping.Type1, mapping.Type2);
-                CreateMap(mapping.Type2, mapping.Type1);
+                this.CreateMap(mapping.Type1, mapping.Type2);
+                this.CreateMap(mapping.Type2, mapping.Type1);
             }
 
             // Create custom mapping for all types implementing the IHaveCustomMapping interface
@@ -57,7 +57,10 @@
                 .Cast<IHaveCustomMapping>()
                 .ToArray();
 
-            foreach (var mapping in customMappings) mapping.ConfigureMapping(this);
+            foreach (var mapping in customMappings)
+            {
+                mapping.ConfigureMapping(this);
+            }
         }
     }
 }

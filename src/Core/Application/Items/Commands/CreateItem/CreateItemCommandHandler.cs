@@ -33,19 +33,21 @@
         public async Task<Response<ItemResponseModel>> Handle(CreateItemCommand request,
             CancellationToken cancellationToken)
         {
-            if (userService.UserId == null
-                || !await context.SubCategories.AnyAsync(c => c.Id == request.SubCategoryId, cancellationToken))
+            if (this.userService.UserId == null
+                || !await this.context.SubCategories.AnyAsync(c => c.Id == request.SubCategoryId, cancellationToken))
+            {
                 throw new BadRequestException(ExceptionMessages.Item.CreateItemErrorMessage);
+            }
 
-            var item = mapper.Map<Item>(request);
-            item.UserId = userService.UserId;
+            var item = this.mapper.Map<Item>(request);
+            item.UserId = this.userService.UserId;
             item.StartTime = item.StartTime.ToUniversalTime();
             item.EndTime = item.EndTime.ToUniversalTime();
 
-            await context.Items.AddAsync(item, cancellationToken);
-            await context.SaveChangesAsync(cancellationToken);
+            await this.context.Items.AddAsync(item, cancellationToken);
+            await this.context.SaveChangesAsync(cancellationToken);
 
-            await mediator.Send(new CreatePictureCommand {ItemId = item.Id, Pictures = request.Pictures},
+            await this.mediator.Send(new CreatePictureCommand { ItemId = item.Id, Pictures = request.Pictures },
                 cancellationToken);
 
             return new Response<ItemResponseModel>(new ItemResponseModel(item.Id));

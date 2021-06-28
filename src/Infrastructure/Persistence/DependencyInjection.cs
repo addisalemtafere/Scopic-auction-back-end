@@ -1,8 +1,7 @@
-﻿using ScopicAuctionSystem.Infrastructure.Identity;
-
-namespace Persistence
+﻿namespace Persistence
 {
     using Application.Common.Interfaces;
+    using AuctionSystem.Infrastructure.Identity;
     using Domain.Entities;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;

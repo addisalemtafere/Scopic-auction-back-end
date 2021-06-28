@@ -24,10 +24,10 @@
         public async Task<MultiResponse<ListCategoriesResponseModel>> Handle(ListCategoriesQuery request,
             CancellationToken cancellationToken)
         {
-            var categories = await context
+            var categories = await this.context
                 .Categories
                 .Include(c => c.SubCategories)
-                .ProjectTo<ListCategoriesResponseModel>(mapper.ConfigurationProvider)
+                .ProjectTo<ListCategoriesResponseModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
             return new MultiResponse<ListCategoriesResponseModel>(categories);

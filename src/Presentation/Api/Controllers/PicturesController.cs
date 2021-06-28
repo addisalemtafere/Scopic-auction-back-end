@@ -31,8 +31,8 @@
             typeof(NotFoundErrorModel))]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await Mediator.Send(new GetPictureDetailsQuery(id));
-            return Ok(result);
+            var result = await this.Mediator.Send(new GetPictureDetailsQuery(id));
+            return this.Ok(result);
         }
 
         /// <summary>
@@ -46,8 +46,8 @@
             typeof(MultiResponse<PictureResponseModel>))]
         public async Task<IActionResult> Post([FromBody] CreatePictureCommand model)
         {
-            var result = await Mediator.Send(model);
-            return Ok(result);
+            var result = await this.Mediator.Send(model);
+            return this.Ok(result);
         }
 
         /// <summary>
@@ -63,10 +63,13 @@
             typeof(NotFoundErrorModel))]
         public async Task<IActionResult> Delete(Guid id, [FromBody] DeletePictureCommand model)
         {
-            if (id != model.PictureId) return BadRequest();
+            if (id != model.PictureId)
+            {
+                return this.BadRequest();
+            }
 
-            await Mediator.Send(model);
-            return NoContent();
+            await this.Mediator.Send(model);
+            return this.NoContent();
         }
     }
 }

@@ -41,10 +41,10 @@
             typeof(BadRequestErrorModel))]
         public async Task<IActionResult> Register(CreateUserCommand model)
         {
-            await Mediator.Send(model);
-            return Ok();
+            await this.Mediator.Send(model);
+            return this.Ok();
         }
-
+        
         /// <summary>
         /// Verifies user email
         /// </summary>
@@ -59,8 +59,8 @@
             typeof(BadRequestErrorModel))]
         public async Task<IActionResult> Confirm(ConfirmEmailCommand model)
         {
-            await Mediator.Send(model);
-            return Ok();
+            await this.Mediator.Send(model);
+            return this.Ok();
         }
 
         /// <summary>
@@ -78,9 +78,9 @@
             typeof(BadRequestErrorModel))]
         public async Task<IActionResult> Login(LoginUserCommand model)
         {
-            var result = await Mediator.Send(model);
-            SetCookies(result.Data.Token, result.Data.RefreshToken.ToString());
-            return Ok(result);
+            var result = await this.Mediator.Send(model);
+            this.SetCookies(result.Data.Token, result.Data.RefreshToken.ToString());
+            return this.Ok(result);
         }
 
         /// <summary>
@@ -98,16 +98,19 @@
             typeof(BadRequestErrorModel))]
         public async Task<IActionResult> Refresh(JwtRefreshTokenCommand model)
         {
-            var refreshToken = Request.Cookies[ApiConstants.RefreshToken];
-            var jwtToken = Request.Cookies[ApiConstants.JwtToken];
+            var refreshToken = this.Request.Cookies[ApiConstants.RefreshToken];
+            var jwtToken = this.Request.Cookies[ApiConstants.JwtToken];
 
-            if (refreshToken == null || jwtToken == null) return Unauthorized();
+            if (refreshToken == null || jwtToken == null)
+            {
+                return this.Unauthorized();
+            }
 
             model.RefreshToken = Guid.Parse(refreshToken);
             model.Token = jwtToken;
-            var result = await Mediator.Send(model);
-            SetCookies(result.Data.Token, result.Data.RefreshToken.ToString());
-            return Ok(result);
+            var result = await this.Mediator.Send(model);
+            this.SetCookies(result.Data.Token, result.Data.RefreshToken.ToString());
+            return this.Ok(result);
         }
 
         /// <summary>
@@ -120,18 +123,18 @@
             SwaggerDocumentation.IdentityConstants.SuccessfulLogOut)]
         public async Task<IActionResult> Logout()
         {
-            Request.Cookies.TryGetValue(ApiConstants.RefreshToken, out var refreshToken);
-            Response.Cookies.Delete(ApiConstants.JwtToken);
-            Response.Cookies.Delete(ApiConstants.RefreshToken);
+            this.Request.Cookies.TryGetValue(ApiConstants.RefreshToken, out var refreshToken);
+            this.Response.Cookies.Delete(ApiConstants.JwtToken);
+            this.Response.Cookies.Delete(ApiConstants.RefreshToken);
 
-            await Mediator.Send(new LogoutUserCommand {RefreshToken = refreshToken});
-            return Ok();
+            await this.Mediator.Send(new LogoutUserCommand {RefreshToken = refreshToken});
+            return this.Ok();
         }
 
         private void SetCookies(string jwtToken, string refreshToken)
         {
-            SetJwtTokenCookie(jwtToken);
-            SetRefreshTokenCookie(refreshToken);
+            this.SetJwtTokenCookie(jwtToken);
+            this.SetRefreshTokenCookie(refreshToken);
         }
 
         private void SetRefreshTokenCookie(string token)
@@ -140,10 +143,10 @@
             {
                 HttpOnly = true,
                 Secure = true,
-                Expires = dateTime.UtcNow.AddMonths(AppConstants.RefreshTokenExpirationTimeInMonths)
+                Expires = this.dateTime.UtcNow.AddMonths(AppConstants.RefreshTokenExpirationTimeInMonths)
             };
 
-            Response.Cookies.Append(ApiConstants.RefreshToken, token, cookieOptions);
+            this.Response.Cookies.Append(ApiConstants.RefreshToken, token, cookieOptions);
         }
 
         private void SetJwtTokenCookie(string token)
@@ -156,7 +159,7 @@
                 Expires = DateTimeOffset.MaxValue
             };
 
-            Response.Cookies.Append(ApiConstants.JwtToken, token, cookieOptions);
+            this.Response.Cookies.Append(ApiConstants.JwtToken, token, cookieOptions);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ScopicAuctionSystem.Infrastructure.Identity
+﻿namespace AuctionSystem.Infrastructure.Identity
 {
     using System.Linq;
     using Application.Common.Models;
@@ -7,10 +7,8 @@
     public static class IdentityResultExtensions
     {
         public static Result ToApplicationResult(this IdentityResult result)
-        {
-            return result.Succeeded
+            => result.Succeeded
                 ? Result.Success()
                 : Result.Failure(result.Errors.Select(e => e.Description).First());
-        }
     }
 }

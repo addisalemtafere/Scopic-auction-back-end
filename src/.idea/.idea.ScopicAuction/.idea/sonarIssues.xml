@@ -3,6 +3,36 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="$PROJECT_DIR$/Core/Application/Admin/Commands/CreateAdmin/CreateAdminCommandHandler.cs">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Core/Application/Categories/Queries/List/ListCategoriesQuery.cs">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Core/Application/Categories/Queries/List/ListCategoriesQueryHandler.cs">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Core/Application/Common/Behaviours/RequestLogger.cs">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Core/Application/Common/Behaviours/RequestPerformanceBehaviour.cs">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Core/Application/Common/Behaviours/RequestValidationBehaviour.cs">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/Infrastructure/Scopic.Infrastructure/EmailSender.cs">
           <value>
             <set />

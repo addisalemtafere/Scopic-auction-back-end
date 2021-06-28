@@ -17,8 +17,11 @@ namespace Application.Users.Commands.ConfirmEmail
 
         public async Task<Unit> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var result = await userManager.ConfirmEmail(request.Email, request.Code);
-            if (!result) throw new BadRequestException(ExceptionMessages.User.EmailVerificationFailed);
+            var result = await this.userManager.ConfirmEmail(request.Email, request.Code);
+            if (!result)
+            {
+                throw new BadRequestException(ExceptionMessages.User.EmailVerificationFailed);
+            }
 
             return Unit.Value;
         }

@@ -46,9 +46,9 @@ namespace Application.Common
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            logger.LogInformation("Email notification Background Service is starting.");
+            this.logger.LogInformation("Email notification Background Service is starting.");
 
-            timer = new Timer(DoWork, null, TimeSpan.Zero,
+            this.timer = new Timer(this.DoWork, null, TimeSpan.Zero,
                 TimeSpan.FromMinutes(1));
 
             return Task.CompletedTask;
@@ -56,30 +56,30 @@ namespace Application.Common
 
         private async void DoWork(object state)
         {
-            logger.LogInformation("Email notification Background Service is working.");
-            await SendEmailToTheWinnersOfGivenBids();
+            this.logger.LogInformation("Email notification Background Service is working.");
+            await this.SendEmailToTheWinnersOfGivenBids();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            logger.LogInformation("Email notification Background Service is stopping.");
+            this.logger.LogInformation("Email notification Background Service is stopping.");
 
-            timer?.Change(Timeout.Infinite, 0);
+            this.timer?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            timer?.Dispose();
+            this.timer?.Dispose();
         }
 
         private async Task SendEmailToTheWinnersOfGivenBids()
         {
-            using var scope = scopeFactory.CreateScope();
+            using var scope = this.scopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<IAuctionSystemDbContext>();
             var items = await context.Items
-                .Where(i => i.EndTime <= dateTime.UtcNow && !i.IsEmailSent && i.Bids.Count >= 1)
+                .Where(i => i.EndTime <= this.dateTime.UtcNow && !i.IsEmailSent && i.Bids.Count >= 1)
                 .Select(i => new ItemDto
                 {
                     Id = i.Id,
@@ -103,35 +103,41 @@ namespace Application.Common
                     })
                     .SingleOrDefaultAsync();
 
-                var emailSendToItemOwner = await emailSender.SendEmailAsync(AppConstants.AppMainEmailAddress,
+                var emailSendToItemOwner = await this.emailSender.SendEmailAsync(AppConstants.AppMainEmailAddress,
                     item.UserEmail,
                     "Your item was sold!",
                     string.Format(CongratsMessageForItemSeller, item.UserFullName, item.Title, winnerBid.Amount,
                         winnerBid.UserEmail));
-                var successful = await emailSender.SendEmailAsync(AppConstants.AppMainEmailAddress,
+                var successful = await this.emailSender.SendEmailAsync(AppConstants.AppMainEmailAddress,
                     winnerBid.UserEmail,
                     "You won a bid!",
                     string.Format(CongratsMessage, winnerBid.UserFullName, item.Title));
 
-                if (!successful || !emailSendToItemOwner) continue;
+                if (!successful || !emailSendToItemOwner)
+                {
+                    continue;
+                }
 
                 try
                 {
                     var dbItem = await context.Items.FindAsync(item.Id);
-                    if (dbItem == null) continue;
+                    if (dbItem == null)
+                    {
+                        continue;
+                    }
 
                     dbItem.IsEmailSent = true;
                     context.Items.Update(dbItem);
                     await context.SaveChangesAsync(CancellationToken.None);
-                    logger.LogInformation(string.Format(LogMessage, dateTime.UtcNow, winnerBid.UserEmail,
+                    this.logger.LogInformation(string.Format(LogMessage, this.dateTime.UtcNow, winnerBid.UserEmail,
                         item.Title));
-                    logger.LogInformation(string.Format(LogMessageForItemOwner, dateTime.UtcNow,
+                    this.logger.LogInformation(string.Format(LogMessageForItemOwner, this.dateTime.UtcNow,
                         item.UserEmail,
                         item.Title));
                 }
                 catch (Exception ex)
                 {
-                    logger.LogInformation(string.Format(ExceptionMessage, ex.Message));
+                    this.logger.LogInformation(string.Format(ExceptionMessage, ex.Message));
                 }
             }
         }

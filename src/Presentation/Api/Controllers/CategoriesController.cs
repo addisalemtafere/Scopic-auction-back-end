@@ -1,7 +1,7 @@
 ﻿namespace Api.Controllers
 {
     using System.Threading.Tasks;
-    using Common;
+    using Api.Common;
     using Application.Categories.Queries.List;
     using Application.Common.Models;
     using Microsoft.AspNetCore.Http;
@@ -25,8 +25,8 @@
             typeof(NotFoundErrorModel))]
         public async Task<IActionResult> Get()
         {
-            var result = await Mediator.Send(new ListCategoriesQuery());
-            return Ok(result);
+            var result = await this.Mediator.Send(new ListCategoriesQuery());
+            return this.Ok(result);
         }
     }
 }

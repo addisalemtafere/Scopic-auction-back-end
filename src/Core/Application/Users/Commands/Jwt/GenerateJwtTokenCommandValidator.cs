@@ -6,8 +6,8 @@
     {
         public GenerateJwtTokenCommandValidator()
         {
-            RuleFor(p => p.UserId).NotEmpty();
-            RuleFor(p => p.Username).NotEmpty();
+            this.RuleFor(p => p.UserId).NotEmpty();
+            this.RuleFor(p => p.Username).NotEmpty();
         }
     }
 }

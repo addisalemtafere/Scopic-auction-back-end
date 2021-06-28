@@ -25,11 +25,11 @@
         public async Task<Response<GetHighestBidDetailsResponseModel>> Handle(GetHighestBidDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            var bid = await context
+            var bid = await this.context
                 .Bids
                 .Where(b => b.ItemId == request.ItemId)
                 .OrderByDescending(b => b.Amount)
-                .ProjectTo<GetHighestBidDetailsResponseModel>(mapper.ConfigurationProvider)
+                .ProjectTo<GetHighestBidDetailsResponseModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return new Response<GetHighestBidDetailsResponseModel>(bid);

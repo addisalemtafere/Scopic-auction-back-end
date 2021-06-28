@@ -6,9 +6,7 @@
     using global::Common;
     using MediatR;
 
-    public class SeedSampleDataCommand : IRequest
-    {
-    }
+    public class SeedSampleDataCommand : IRequest { }
 
     public class SeedSampleDataCommandHandler : IRequestHandler<SeedSampleDataCommand>
     {
@@ -28,7 +26,7 @@
 
         public async Task<Unit> Handle(SeedSampleDataCommand request, CancellationToken cancellationToken)
         {
-            var seeder = new Seeder(context, dateTime, userManager);
+            var seeder = new Seeder(this.context, this.dateTime, this.userManager);
             await seeder.SeedAllAsync(cancellationToken);
             return Unit.Value;
         }

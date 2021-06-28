@@ -29,8 +29,8 @@
             typeof(NotFoundErrorModel))]
         public async Task<IActionResult> Post([FromBody] CreateBidCommand model)
         {
-            await Mediator.Send(model);
-            return NoContent();
+            await this.Mediator.Send(model);
+            return this.NoContent();
         }
 
         [HttpGet]
@@ -41,8 +41,8 @@
             typeof(GetHighestBidDetailsResponseModel))]
         public async Task<IActionResult> GetHighestBid(Guid itemId)
         {
-            var result = await Mediator.Send(new GetHighestBidDetailsQuery(itemId));
-            return Ok(result);
+            var result = await this.Mediator.Send(new GetHighestBidDetailsQuery(itemId));
+            return this.Ok(result);
         }
     }
 }

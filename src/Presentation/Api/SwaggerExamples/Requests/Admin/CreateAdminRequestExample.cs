@@ -6,8 +6,6 @@
     public class CreateAdminRequestExample : IExamplesProvider<CreateAdminCommand>
     {
         public CreateAdminCommand GetExamples()
-        {
-            return new() {Email = "test1@test.com", Role = "Administrator"};
-        }
+            => new CreateAdminCommand { Email = "test1@test.com", Role = "Administrator" };
     }
 }

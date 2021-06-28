@@ -1,4 +1,4 @@
-﻿namespace ScopicAuctionSystem.Infrastructure
+﻿namespace AuctionSystem.Infrastructure
 {
     using Application.Common.Interfaces;
     using Common;

@@ -7,8 +7,6 @@
     public class CreateBidRequestExample : IExamplesProvider<CreateBidCommand>
     {
         public CreateBidCommand GetExamples()
-        {
-            return new() {Amount = 100000.99m, ItemId = Guid.NewGuid(), UserId = Guid.NewGuid().ToString()};
-        }
+            => new CreateBidCommand { Amount = 100000.99m, ItemId = Guid.NewGuid(), UserId = Guid.NewGuid().ToString() };
     }
 }

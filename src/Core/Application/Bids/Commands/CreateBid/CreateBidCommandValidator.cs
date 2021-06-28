@@ -7,10 +7,10 @@
     {
         public CreateBidCommandValidator()
         {
-            RuleFor(p => p.Amount).NotEmpty()
+            this.RuleFor(p => p.Amount).NotEmpty()
                 .InclusiveBetween(ModelConstants.Bid.MinAmount, ModelConstants.Bid.MaxAmount);
-            RuleFor(p => p.ItemId).NotEmpty();
-            RuleFor(p => p.UserId).NotEmpty();
+            this.RuleFor(p => p.ItemId).NotEmpty();
+            this.RuleFor(p => p.UserId).NotEmpty();
         }
     }
 }

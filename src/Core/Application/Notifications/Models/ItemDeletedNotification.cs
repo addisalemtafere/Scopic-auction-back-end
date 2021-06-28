@@ -7,7 +7,7 @@
     {
         public ItemDeletedNotification(Guid itemId)
         {
-            ItemId = itemId;
+            this.ItemId = itemId;
         }
 
         public Guid ItemId { get; set; }

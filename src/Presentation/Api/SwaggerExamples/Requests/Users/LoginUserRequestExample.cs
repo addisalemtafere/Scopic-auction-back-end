@@ -6,8 +6,6 @@
     public class LoginUserRequestExample : IExamplesProvider<LoginUserCommand>
     {
         public LoginUserCommand GetExamples()
-        {
-            return new() {Email = "test@test.com", Password = "test123"};
-        }
+            => new LoginUserCommand { Email = "test@test.com", Password = "test123" };
     }
 }

@@ -10,7 +10,7 @@
         public ValidationException()
             : base("One or more validation failures have occurred.")
         {
-            Failures = new Dictionary<string, string[]>();
+            this.Failures = new Dictionary<string, string[]>();
         }
 
         public ValidationException(IReadOnlyCollection<ValidationFailure> failures)
@@ -27,7 +27,7 @@
                     .Select(e => e.ErrorMessage)
                     .ToArray();
 
-                Failures.Add(propertyName, propertyFailures);
+                this.Failures.Add(propertyName, propertyFailures);
             }
         }
 

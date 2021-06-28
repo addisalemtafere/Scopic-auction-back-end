@@ -6,7 +6,7 @@
     {
         public MultiResponse(IEnumerable<T> data)
         {
-            Data = data;
+            this.Data = data;
         }
 
         public IEnumerable<T> Data { get; }

@@ -7,9 +7,9 @@
     {
         private Result(bool succeeded, string error, ErrorType errorType = ErrorType.General)
         {
-            Succeeded = succeeded;
-            Error = error;
-            ErrorType = errorType;
+            this.Succeeded = succeeded;
+            this.Error = error;
+            this.ErrorType = errorType;
         }
 
         public bool Succeeded { get; }
@@ -19,13 +19,9 @@
         public string Error { get; }
 
         public static Result Success()
-        {
-            return new(true, string.Empty);
-        }
+            => new Result(true, string.Empty);
 
         public static Result Failure(string error, ErrorType errorType = ErrorType.General)
-        {
-            return new(false, error, errorType);
-        }
+            => new Result(false, error, errorType);
     }
 }

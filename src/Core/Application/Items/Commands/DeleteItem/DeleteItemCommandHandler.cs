@@ -25,17 +25,19 @@
 
         public async Task<Unit> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
         {
-            var itemToDelete = await context
+            var itemToDelete = await this.context
                 .Items
                 .FindAsync(request.Id);
 
             if (itemToDelete == null
-                || itemToDelete.UserId != currentUserService.UserId && !currentUserService.IsAdmin)
+                || itemToDelete.UserId != this.currentUserService.UserId && !this.currentUserService.IsAdmin)
+            {
                 throw new NotFoundException(nameof(Item));
+            }
 
-            context.Items.Remove(itemToDelete);
-            await context.SaveChangesAsync(cancellationToken);
-            await mediator.Publish(new ItemDeletedNotification(itemToDelete.Id), cancellationToken);
+            this.context.Items.Remove(itemToDelete);
+            await this.context.SaveChangesAsync(cancellationToken);
+            await this.mediator.Publish(new ItemDeletedNotification(itemToDelete.Id), cancellationToken);
 
             return Unit.Value;
         }

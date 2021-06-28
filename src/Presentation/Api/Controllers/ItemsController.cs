@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Common;
+    using Api.Common;
     using Application.Common.Models;
     using Application.Items.Commands;
     using Application.Items.Commands.CreateItem;
@@ -38,14 +38,13 @@
             SwaggerDocumentation.ItemConstants.SuccessfulGetRequestMessage,
             typeof(PagedResponse<ListItemsResponseModel>))]
         [Cached(CachingTimeInMinutes)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQuery paginationQuery,
-            [FromQuery] ItemsFilter filters)
+        public async Task<IActionResult> Get([FromQuery] PaginationQuery paginationQuery, [FromQuery] ItemsFilter filters)
         {
-            var paginationFilter = mapper.Map<PaginationFilter>(paginationQuery);
-            var model = mapper.Map<ListItemsQuery>(paginationFilter);
-            model.Filters = mapper.Map<ListAllItemsQueryFilter>(filters);
-            var result = await Mediator.Send(model);
-            return Ok(result);
+            var paginationFilter = this.mapper.Map<PaginationFilter>(paginationQuery);
+            var model = this.mapper.Map<ListItemsQuery>(paginationFilter);
+            model.Filters = this.mapper.Map<ListAllItemsQueryFilter>(filters);
+            var result = await this.Mediator.Send(model);
+            return this.Ok(result);
         }
 
         /// <summary>
@@ -62,8 +61,8 @@
             typeof(BadRequestErrorModel))]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await Mediator.Send(new GetItemDetailsQuery(id));
-            return Ok(result);
+            var result = await this.Mediator.Send(new GetItemDetailsQuery(id));
+            return this.Ok(result);
         }
 
         /// <summary>
@@ -84,8 +83,8 @@
             SwaggerDocumentation.UnauthorizedDescriptionMessage)]
         public async Task<IActionResult> Post([FromForm] CreateItemCommand model)
         {
-            var result = await Mediator.Send(model);
-            return CreatedAtAction(nameof(Post), result);
+            var result = await this.Mediator.Send(model);
+            return this.CreatedAtAction(nameof(this.Post), result);
         }
 
         /// <summary>
@@ -111,10 +110,13 @@
             SwaggerDocumentation.UnauthorizedDescriptionMessage)]
         public async Task<IActionResult> Put(Guid id, [FromForm] UpdateItemCommand model)
         {
-            if (id != model.Id) return BadRequest();
+            if (id != model.Id)
+            {
+                return this.BadRequest();
+            }
 
-            await Mediator.Send(model);
-            return NoContent();
+            await this.Mediator.Send(model);
+            return this.NoContent();
         }
 
         /// <summary>
@@ -135,8 +137,8 @@
             SwaggerDocumentation.UnauthorizedDescriptionMessage)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await Mediator.Send(new DeleteItemCommand(id));
-            return NoContent();
+            await this.Mediator.Send(new DeleteItemCommand(id));
+            return this.NoContent();
         }
     }
 }

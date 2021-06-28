@@ -6,8 +6,8 @@
     {
         public DeletePictureCommandValidator()
         {
-            RuleFor(p => p.PictureId).NotEmpty();
-            RuleFor(p => p.ItemId).NotEmpty();
+            this.RuleFor(p => p.PictureId).NotEmpty();
+            this.RuleFor(p => p.ItemId).NotEmpty();
         }
     }
 }

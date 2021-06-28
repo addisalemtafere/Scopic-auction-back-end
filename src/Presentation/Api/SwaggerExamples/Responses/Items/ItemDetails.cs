@@ -10,8 +10,7 @@
     public class ItemDetails : IExamplesProvider<Response<ItemDetailsResponseModel>>
     {
         public Response<ItemDetailsResponseModel> GetExamples()
-        {
-            return new(new ItemDetailsResponseModel
+            => new Response<ItemDetailsResponseModel>(new ItemDetailsResponseModel
             {
                 Id = Guid.Parse("46B33009-243D-4765-872E-08D7DFB08A87"),
                 Title = "Test Title_1",
@@ -24,9 +23,8 @@
                 SubCategoryName = "Antiques",
                 Pictures = new List<PictureResponseModel>
                 {
-                    new() {Id = Guid.NewGuid(), Url = "Some example url here"}
+                    new PictureResponseModel { Id = Guid.NewGuid(), Url = "Some example url here" }
                 }
             });
-        }
     }
 }

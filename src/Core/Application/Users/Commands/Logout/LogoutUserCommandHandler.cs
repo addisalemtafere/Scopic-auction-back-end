@@ -20,17 +20,20 @@ namespace Application.Users.Commands.Logout
         public async Task<Unit> Handle(LogoutUserCommand request, CancellationToken cancellationToken)
         {
             // If we don't have refresh token it means that user is already logged out
-            if (request.RefreshToken == null) return Unit.Value;
-
-            var refreshToken = await context
+            if (request.RefreshToken == null)
+            {
+                return Unit.Value;
+            }
+            
+            var refreshToken = await this.context
                 .RefreshTokens
                 .Where(r => r.Token == Guid.Parse(request.RefreshToken))
                 .SingleOrDefaultAsync(cancellationToken);
             refreshToken.Invalidated = true;
 
-            context.RefreshTokens.Update(refreshToken);
-            await context.SaveChangesAsync(cancellationToken);
-
+            this.context.RefreshTokens.Update(refreshToken);
+            await this.context.SaveChangesAsync(cancellationToken);
+            
             return Unit.Value;
         }
     }

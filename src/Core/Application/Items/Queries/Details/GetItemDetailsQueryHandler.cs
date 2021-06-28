@@ -25,12 +25,15 @@
         public async Task<Response<ItemDetailsResponseModel>> Handle(GetItemDetailsQuery request,
             CancellationToken cancellationToken)
         {
-            var item = await context
+            var item = await this.context
                 .Items
-                .ProjectTo<ItemDetailsResponseModel>(mapper.ConfigurationProvider)
+                .ProjectTo<ItemDetailsResponseModel>(this.mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync(i => i.Id == request.Id, cancellationToken);
 
-            if (item == null) throw new NotFoundException(nameof(Item));
+            if (item == null)
+            {
+                throw new NotFoundException(nameof(Item));
+            }
 
             return new Response<ItemDetailsResponseModel>(item);
         }

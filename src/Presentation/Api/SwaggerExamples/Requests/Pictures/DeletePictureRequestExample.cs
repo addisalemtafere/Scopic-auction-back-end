@@ -7,8 +7,6 @@
     public class DeletePictureRequestExample : IExamplesProvider<DeletePictureCommand>
     {
         public DeletePictureCommand GetExamples()
-        {
-            return new() {PictureId = Guid.NewGuid(), ItemId = Guid.NewGuid()};
-        }
+            => new DeletePictureCommand { PictureId = Guid.NewGuid(), ItemId = Guid.NewGuid() };
     }
 }

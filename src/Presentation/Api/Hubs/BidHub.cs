@@ -24,9 +24,12 @@ namespace Api.Hubs
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task Setup(string itemId)
         {
-            if (itemId == null) return;
+            if (itemId == null)
+            {
+                return;
+            }
 
-            await Groups.AddToGroupAsync(Context.ConnectionId, itemId);
+            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, itemId);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -34,23 +37,23 @@ namespace Api.Hubs
         {
             try
             {
-                var userId = currentUserService.UserId;
-                await mediator.Send(new CreateBidCommand
+                var userId = this.currentUserService.UserId;
+                await this.mediator.Send(new CreateBidCommand
                 {
                     Amount = bidAmount,
                     ItemId = Guid.Parse(itemId),
-                    UserId = userId
+                    UserId = userId,
                 });
-
-                await Clients.Groups(itemId).SendAsync("ReceiveMessage", bidAmount, userId);
+                
+                await this.Clients.Groups(itemId).SendAsync("ReceiveMessage", bidAmount, userId);
             }
             catch (NotFoundException ex)
             {
-                await Clients.Caller.SendAsync("handleException", ex.Message);
+                await this.Clients.Caller.SendAsync("handleException", ex.Message);
             }
             catch (BadRequestException ex)
             {
-                await Clients.Caller.SendAsync("handleException", ex.Message);
+                await this.Clients.Caller.SendAsync("handleException", ex.Message);
             }
         }
     }

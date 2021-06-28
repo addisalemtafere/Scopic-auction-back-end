@@ -8,7 +8,7 @@
     {
         public GetHighestBidDetailsQuery(Guid itemId)
         {
-            ItemId = itemId;
+            this.ItemId = itemId;
         }
 
         public Guid ItemId { get; }
